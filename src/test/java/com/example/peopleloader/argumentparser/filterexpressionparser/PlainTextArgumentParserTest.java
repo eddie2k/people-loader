@@ -5,6 +5,7 @@ import static com.example.peopleloader.argumentparser.PlainTextArgumentParser.FI
 import static com.example.peopleloader.argumentparser.PlainTextArgumentParser.FILTER_FLAG;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -20,6 +21,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.example.peopleloader.argumentparser.ParsedArguments;
 import com.example.peopleloader.argumentparser.PlainTextArgumentParser;
+import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidFilterException;
 import com.example.peopleloader.exception.InvalidProgramArgumentsException;
 import com.example.peopleloader.filterexpression.FilterExpression;
 
@@ -100,6 +102,15 @@ public class PlainTextArgumentParserTest {
 	public void shouldRejectArguments_givenFilterFlag_andNoFilterExpression() {
 		// when
 		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG));
+	}
+
+	@Test(expected = InvalidProgramArgumentsException.class)
+	public void shouldRejectArguments_givenInvañodFilterExpression() {
+		// given
+		willThrow(InvalidFilterException.class).given(filterExpressionParser).parse(any());
+
+		// when
+		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, ANOTHER_STRING));
 	}
 
 	@Test

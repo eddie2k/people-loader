@@ -3,6 +3,7 @@ package com.example.peopleloader.argumentparser;
 import java.util.List;
 
 import com.example.peopleloader.argumentparser.filterexpressionparser.FilterExpressionParser;
+import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidFilterException;
 import com.example.peopleloader.exception.InvalidProgramArgumentsException;
 import com.example.peopleloader.filterexpression.FilterExpression;
 
@@ -25,10 +26,14 @@ public class PlainTextArgumentParser implements ArgumentParser {
 		if (args.size() < 2) {
 			throw new InvalidProgramArgumentsException("Program arguments are not enough (currenly=" + args + ")");
 		}
+
+		try {
 		String fileName = parseFileName(args);
 		FilterExpression filterExpression = parseFilterExpression(args);
-
 		return new ParsedArguments(fileName, filterExpression);
+		} catch (InvalidFilterException e) {
+			throw new InvalidProgramArgumentsException(e);
+		}
 	}
 
 	private static String parseFileName(List<String> args) {
