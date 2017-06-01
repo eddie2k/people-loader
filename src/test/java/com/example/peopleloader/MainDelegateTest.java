@@ -7,6 +7,8 @@ import static org.mockito.Mockito.verify;
 
 import java.io.FileNotFoundException;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.Before;
@@ -27,7 +29,7 @@ import com.example.peopleloader.printer.Printer;
 @RunWith(MockitoJUnitRunner.class)
 public class MainDelegateTest {
 
-	private static final Object ANY_ARGS = new Object();
+	private static final List<String> ANY_ARGS = Arrays.asList("ANY_STRING");
 
 	private static final String ANY_FILENAME = "ANY_FILENAME";
 

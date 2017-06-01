@@ -1,6 +1,7 @@
 package com.example.peopleloader;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -32,7 +33,7 @@ public final class MainDelegate {
 		this.printer = printer;
 	}
 
-	public void run(Object args) {
+	public void run(List<String> args) {
 		Objects.requireNonNull(args);
 
 		try {
