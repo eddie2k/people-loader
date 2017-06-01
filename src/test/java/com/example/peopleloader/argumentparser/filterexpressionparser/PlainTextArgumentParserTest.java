@@ -53,21 +53,6 @@ public class PlainTextArgumentParserTest {
 	}
 
 	@Test(expected = InvalidProgramArgumentsException.class)
-	public void shouldRejectArguments_givenFilenameFlagIsNotFirst() {
-		// when
-		sut.parse(Arrays.asList(ANY_STRING, ANOTHER_STRING));
-	}
-
-	@Test
-	public void shouldParseFilename_givenFilenameFlagIsFirst() {
-		// when
-		ParsedArguments parsed = sut.parse(asList(FILENAME_FLAG, ANY_STRING));
-
-		// then
-		assertThat(parsed.getFilename()).isEqualTo(ANY_STRING);
-	}
-
-	@Test(expected = InvalidProgramArgumentsException.class)
 	public void shouldRejectArguments_givenFirstArgumentIsNotFilenameFlag() {
 		// when
 		String wrongFlag = FILENAME_FLAG + "WRONG";
@@ -77,8 +62,17 @@ public class PlainTextArgumentParserTest {
 		verify(filterExpressionParser).parse(Mockito.any());
 	}
 
+
 	@Test
-	public void shouldParseFilter_givenFourthArgumentIsNotEmpty() {
+	public void shouldParseFilename_givenFirstArgumentIsFilenameFlag() {
+		// when
+		ParsedArguments parsed = sut.parse(asList(FILENAME_FLAG, ANY_STRING));
+
+		// then
+		assertThat(parsed.getFilename()).isEqualTo(ANY_STRING);
+	}
+	@Test
+	public void shouldParseFilter_givenFilterArgumentsAreNotEmpty() {
 		// when
 		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, ANOTHER_STRING));
 
