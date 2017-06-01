@@ -28,9 +28,9 @@ public class PlainTextArgumentParser implements ArgumentParser {
 		}
 
 		try {
-		String fileName = parseFileName(args);
-		FilterExpression filterExpression = parseFilterExpression(args);
-		return new ParsedArguments(fileName, filterExpression);
+			String fileName = parseFileName(args);
+			FilterExpression filterExpression = parseFilterExpression(args);
+			return new ParsedArguments(fileName, filterExpression);
 		} catch (InvalidFilterException e) {
 			throw new InvalidProgramArgumentsException(e);
 		}
