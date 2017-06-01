@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.willReturn;
 import static org.mockito.Mockito.mock;
 
+import java.time.LocalDate;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -13,6 +14,8 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.example.peopleloader.filterexpression.FilterExpression;
+import com.example.peopleloader.model.BirthDate;
+import com.example.peopleloader.model.Name;
 import com.example.peopleloader.model.Person;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -20,8 +23,9 @@ public class LiveFilterTest {
 
 	private static final FilterExpression ANY_EXPRESSION = mock(FilterExpression.class);
 
-	private static final Person ANY_PERSON = new Person();
-	private static final Person ANOTHER_PERSON = new Person();
+	private static final Person ANY_PERSON = new Person(new Name("Name1"), new BirthDate(LocalDate.of(2017, 05, 31)));
+	private static final Person ANOTHER_PERSON = new Person(new Name("Name2"),
+			new BirthDate(LocalDate.of(2017, 06, 01)));
 
 	private static final Stream<Person> ANY_STREAM = Stream.of(ANY_PERSON, ANOTHER_PERSON);
 

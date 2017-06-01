@@ -5,6 +5,7 @@ import static org.mockito.BDDMockito.willThrow;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
+import java.io.FileNotFoundException;
 import java.io.UncheckedIOException;
 import java.util.stream.Stream;
 
@@ -106,7 +107,7 @@ public class MainDelegateTest {
 	}
 
 	@Test
-	public void shouldLoadFile_givenParsedFilename() {
+	public void shouldLoadFile_givenParsedFilename() throws FileNotFoundException {
 		// given
 		ParsedArguments parsedArguments = new ParsedArguments(ANY_FILENAME, ANY_FILTER_EXPRESSION);
 		given(argumentParser.parse(ANY_ARGS)).willReturn(parsedArguments);
@@ -115,26 +116,26 @@ public class MainDelegateTest {
 		sut.run(ANY_ARGS);
 
 		// then
-		verify(loader).load(ANY_FILENAME);
+		verify(loader).loadFromFile(ANY_FILENAME);
 	}
 
 	@Test(expected = UncheckedIOException.class)
-	public void shouldThrowUncheckedIOException_givenLoadingFail() {
+	public void shouldThrowUncheckedIOException_givenLoadingFail() throws FileNotFoundException {
 		// given
 		ParsedArguments parsedArguments = new ParsedArguments(ANY_FILENAME, ANY_FILTER_EXPRESSION);
 		given(argumentParser.parse(ANY_ARGS)).willReturn(parsedArguments);
-		willThrow(UncheckedIOException.class).given(loader).load(ANY_FILENAME);
+		willThrow(UncheckedIOException.class).given(loader).loadFromFile(ANY_FILENAME);
 
 		// when
 		sut.run(ANY_ARGS);
 	}
 
 	@Test
-	public void shouldApplyFilter_givenLoaded() {
+	public void shouldApplyFilter_givenLoaded() throws FileNotFoundException {
 		// given
 		ParsedArguments parsedArguments = new ParsedArguments(ANY_FILENAME, ANY_FILTER_EXPRESSION);
 		given(argumentParser.parse(ANY_ARGS)).willReturn(parsedArguments);
-		given(loader.load(ANY_FILENAME)).willReturn(ANY_STREAM);
+		given(loader.loadFromFile(ANY_FILENAME)).willReturn(ANY_STREAM);
 
 		// when
 		sut.run(ANY_ARGS);
@@ -144,12 +145,12 @@ public class MainDelegateTest {
 	}
 
 	@Test
-	public void shouldPrintFilteredPerson_givenLoaded() {
+	public void shouldPrintFilteredPerson_givenLoaded() throws FileNotFoundException {
 		// given
 		ParsedArguments parsedArguments = new ParsedArguments(ANY_FILENAME, ANY_FILTER_EXPRESSION);
 		Stream<Person> filteredStream = Stream.empty();
 		given(argumentParser.parse(ANY_ARGS)).willReturn(parsedArguments);
-		given(loader.load(ANY_FILENAME)).willReturn(ANY_STREAM);
+		given(loader.loadFromFile(ANY_FILENAME)).willReturn(ANY_STREAM);
 		given(filter.applyFilter(ANY_STREAM, ANY_FILTER_EXPRESSION)).willReturn(filteredStream);
 
 		// when

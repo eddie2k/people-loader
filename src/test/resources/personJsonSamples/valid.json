@@ -1,0 +1,18 @@
+[
+  {
+    "name": "John_Lennon",
+    "birthDate": "1940-10-09"
+  },
+  {
+    "name": "Paul_McCartney",
+    "birthDate": "1942-06-18"
+  },
+  {
+    "name": "George_Harrison",
+    "birthDate": "1943-02-25"
+  },
+  {
+    "name": "Ringo_Starr",
+    "birthDate": "1940-07-07"
+  }
+]

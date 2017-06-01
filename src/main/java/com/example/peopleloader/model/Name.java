@@ -1,20 +1,17 @@
 package com.example.peopleloader.model;
 
-public final class Person {
+public final class Name {
 
-	private final Name name;
-	private final BirthDate birthDate;
+	private final String name;
 
-	public Person(Name name, BirthDate birthDate) {
+	public Name(String name) {
 		this.name = name;
-		this.birthDate = birthDate;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((birthDate == null) ? 0 : birthDate.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
@@ -27,17 +24,10 @@ public final class Person {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Person)) {
+		if (!(obj instanceof Name)) {
 			return false;
 		}
-		Person other = (Person) obj;
-		if (birthDate == null) {
-			if (other.birthDate != null) {
-				return false;
-			}
-		} else if (!birthDate.equals(other.birthDate)) {
-			return false;
-		}
+		Name other = (Name) obj;
 		if (name == null) {
 			if (other.name != null) {
 				return false;
@@ -50,7 +40,7 @@ public final class Person {
 
 	@Override
 	public String toString() {
-		return "Person [" + name + ", " + birthDate + "]";
+		return "Name=" + name;
 	}
 
 }

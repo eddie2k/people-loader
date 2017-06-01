@@ -1,5 +1,6 @@
 package com.example.peopleloader;
 
+import java.io.FileNotFoundException;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -8,6 +9,7 @@ import com.example.peopleloader.argumentparser.ParsedArguments;
 import com.example.peopleloader.filter.Filter;
 import com.example.peopleloader.filterexpression.FilterExpression;
 import com.example.peopleloader.loader.Loader;
+import com.example.peopleloader.loader.exception.JsonParseException;
 import com.example.peopleloader.model.Person;
 import com.example.peopleloader.printer.Printer;
 
@@ -33,13 +35,20 @@ public final class MainDelegate {
 	public void run(Object args) {
 		Objects.requireNonNull(args);
 
-		ParsedArguments parsedArguments = argumentParser.parse(args);
-		FilterExpression filterExpression = parsedArguments.getFilterExpression();
-		String filename = parsedArguments.getFilename();
+		try {
+			ParsedArguments parsedArguments = argumentParser.parse(args);
+			FilterExpression filterExpression = parsedArguments.getFilterExpression();
+			String filename = parsedArguments.getFilename();
 
-		Stream<Person> loaded = loader.load(filename);
-		Stream<Person> filtered = filter.applyFilter(loaded, filterExpression);
-		printer.print(filtered);
+			Stream<Person> loaded = loader.loadFromFile(filename);
+			Stream<Person> filtered = filter.applyFilter(loaded, filterExpression);
+			printer.print(filtered);
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found: " + e.getMessage());
+		} catch (JsonParseException e) {
+			System.out.println("Error parsing the file: " + e.getMessage());
+		}
+		// TODO parse filter exception
 	}
 
 }
