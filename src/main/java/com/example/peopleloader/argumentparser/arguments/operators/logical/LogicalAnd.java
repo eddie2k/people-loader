@@ -18,6 +18,6 @@ public final class LogicalAnd implements LogicalBinaryOperator {
 
 	@Override
 	public String toString() {
-		return "AND";
+		return "and";
 	}
 }
