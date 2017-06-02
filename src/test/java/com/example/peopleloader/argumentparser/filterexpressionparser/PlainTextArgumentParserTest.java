@@ -74,9 +74,9 @@ public class PlainTextArgumentParserTest {
 		assertThat(parsed.getFilename()).isEqualTo(ANY_STRING);
 	}
 	@Test
-	public void shouldParseFilter_givenFilterArgumentsAreNotEmpty() {
+	public void shouldParseFilter_givenFilterArgumentsAreNotEmpty_andBetweenQuotes() {
 		// when
-		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, ANOTHER_STRING));
+		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "\"" + ANOTHER_STRING + "\""));
 
 		// then
 		verify(filterExpressionParser).parse(Mockito.any());
@@ -85,7 +85,7 @@ public class PlainTextArgumentParserTest {
 	@Test
 	public void shouldComposeFilterFromThirdAndFollowingArgs() {
 		// when
-		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, ANOTHER_STRING, A_THIRD_STRING));
+		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "\"" + ANOTHER_STRING, A_THIRD_STRING + "\""));
 
 		// then
 		verify(filterExpressionParser).parse(ANOTHER_STRING + " " + A_THIRD_STRING);
@@ -105,7 +105,7 @@ public class PlainTextArgumentParserTest {
 	}
 
 	@Test(expected = InvalidProgramArgumentsException.class)
-	public void shouldRejectArguments_givenInvañodFilterExpression() {
+	public void shouldRejectArguments_givenInvalidFilterExpression() {
 		// given
 		willThrow(InvalidFilterException.class).given(filterExpressionParser).parse(any());
 
@@ -120,6 +120,12 @@ public class PlainTextArgumentParserTest {
 
 		// then
 		verify(filterExpressionParser).parse("");
+	}
+
+	@Test(expected = InvalidProgramArgumentsException.class)
+	public void shouldRejectArguments__whenFilterExpressionIsNotBetweenDoubleQuotes() {
+		// when
+		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, ANOTHER_STRING));
 	}
 
 	@Test

@@ -56,14 +56,25 @@ public class PlainTextArgumentParser implements ArgumentParser {
 		} else if (!args.get(2).equals(FILTER_FLAG)) {
 			throw new InvalidProgramArgumentsException("Filename flag (\"" + FILTER_FLAG
 					+ "\") should the third argument (currently= " + args.get(2) + ")");
-		} else {
-			if (args.size() == 3) {
-				throw new InvalidProgramArgumentsException("Filter expression is empty");
-			} else {
-				String joinedArguments = String.join(" ", args.subList(3, args.size()));
-				return filterExpressionParser.parse(joinedArguments);
-			}
 		}
+		if (args.size() == 3) {
+			throw new InvalidProgramArgumentsException("Filter expression is empty");
+		}
+
+		String joinedFilterArguments = String.join(" ", args.subList(3, args.size()));
+		if (!isBetweenDoubleQuotes(joinedFilterArguments)) {
+			throw new InvalidProgramArgumentsException(
+					"Filter expression must be surrounded by double quotes (currently=" + joinedFilterArguments + ")");
+		}
+		return filterExpressionParser.parse(stripOutDoubleQuotes(joinedFilterArguments));
+	}
+
+	private static boolean isBetweenDoubleQuotes(String text) {
+		return text.matches("\"[^\"]*\"");
+	}
+
+	private static String stripOutDoubleQuotes(String text) {
+		return text.replaceAll("\"", "");
 	}
 
 }
