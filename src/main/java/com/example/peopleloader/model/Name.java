@@ -1,11 +1,16 @@
 package com.example.peopleloader.model;
 
-public final class Name {
+public final class Name implements Comparable<Name> {
 
 	private final String name;
 
 	public Name(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public int compareTo(Name other) {
+		return name.compareTo(other.name);
 	}
 
 	@Override

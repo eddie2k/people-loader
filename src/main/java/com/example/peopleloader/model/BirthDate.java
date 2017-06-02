@@ -2,12 +2,17 @@ package com.example.peopleloader.model;
 
 import java.time.LocalDate;
 
-public final class BirthDate {
+public final class BirthDate implements Comparable<BirthDate> {
 
 	private final LocalDate date;
 
 	public BirthDate(LocalDate date) {
 		this.date = date;
+	}
+
+	@Override
+	public int compareTo(BirthDate other) {
+		return date.compareTo(other.date);
 	}
 
 	@Override

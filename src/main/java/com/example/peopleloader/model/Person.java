@@ -10,6 +10,14 @@ public final class Person {
 		this.birthDate = birthDate;
 	}
 
+	public Name getName() {
+		return name;
+	}
+
+	public BirthDate getBirtDate() {
+		return birthDate;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

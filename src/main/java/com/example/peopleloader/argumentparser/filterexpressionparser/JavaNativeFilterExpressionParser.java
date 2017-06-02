@@ -4,8 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidFilterException;
+import com.example.peopleloader.filterexpression.CompoundFilterExpression;
 import com.example.peopleloader.filterexpression.FilterExpression;
 import com.example.peopleloader.filterexpression.NoFilterExpression;
+import com.example.peopleloader.filterexpression.SimpleFilterExpression;
 
 public class JavaNativeFilterExpressionParser implements FilterExpressionParser {
 
@@ -47,7 +49,7 @@ public class JavaNativeFilterExpressionParser implements FilterExpressionParser 
 		return n == 3;
 	}
 
-	private FilterExpression parseSimpleFilterExpr(List<String> tokens) {
+	private SimpleFilterExpression<?> parseSimpleFilterExpr(List<String> tokens) {
 		String fieldStr = tokens.get(0);
 		String opStr = tokens.get(1);
 		String valueStr = tokens.get(2);
@@ -59,7 +61,7 @@ public class JavaNativeFilterExpressionParser implements FilterExpressionParser 
 		return (n - 3) % 4 == 0;
 	}
 
-	private FilterExpression parseCompoundFilter(List<String> tokens) {
+	private CompoundFilterExpression parseCompoundFilter(List<String> tokens) {
 		return compoundExprParser.parse(tokens);
 	}
 
