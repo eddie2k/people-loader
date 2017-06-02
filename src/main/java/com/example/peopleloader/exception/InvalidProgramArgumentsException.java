@@ -1,10 +1,8 @@
 package com.example.peopleloader.exception;
 
-import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidFilterException;
-
 public class InvalidProgramArgumentsException extends RuntimeException {
 
-	public InvalidProgramArgumentsException(InvalidFilterException e) {
+	public InvalidProgramArgumentsException(Exception e) {
 		super(e);
 	}
 

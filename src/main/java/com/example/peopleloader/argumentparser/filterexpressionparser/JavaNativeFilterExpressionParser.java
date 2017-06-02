@@ -1,13 +1,14 @@
 package com.example.peopleloader.argumentparser.filterexpressionparser;
 
+import static com.example.peopleloader.argumentparser.filterexpressionparser.JavaNativeCompoundFilterExpressionParser.argsNumberForCompoundFilter;
+import static com.example.peopleloader.argumentparser.filterexpressionparser.JavaNativeSimpleFilterExpressionParser.argsNumberForSimpleFilter;
+
 import java.util.Arrays;
 import java.util.List;
 
 import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidFilterException;
-import com.example.peopleloader.filterexpression.CompoundFilterExpression;
 import com.example.peopleloader.filterexpression.FilterExpression;
 import com.example.peopleloader.filterexpression.NoFilterExpression;
-import com.example.peopleloader.filterexpression.SimpleFilterExpression;
 
 public class JavaNativeFilterExpressionParser implements FilterExpressionParser {
 
@@ -32,37 +33,16 @@ public class JavaNativeFilterExpressionParser implements FilterExpressionParser 
 		}
 
 		List<String> tokens = Arrays.asList(filterExpression.split(" "));
-		return parse(tokens);
-	}
-
-	private FilterExpression parse(List<String> tokens) {
 		if (argsNumberForSimpleFilter(tokens.size())) {
-			return parseSimpleFilterExpr(tokens);
+			String fieldStr = tokens.get(0);
+			String opStr = tokens.get(1);
+			String valueStr = tokens.get(2);
+			return simpleExprParser.parse(fieldStr, opStr, valueStr);
 		} else if (argsNumberForCompoundFilter(tokens.size())) {
-			return parseCompoundFilter(tokens);
-		}else {
+			return compoundExprParser.parse(tokens);
+		} else {
 			throw new InvalidFilterException("Filter is not valid: " + tokens);
 		}
-	}
-
-	private static boolean argsNumberForSimpleFilter(int n) {
-		return n == 3;
-	}
-
-	private SimpleFilterExpression<?> parseSimpleFilterExpr(List<String> tokens) {
-		String fieldStr = tokens.get(0);
-		String opStr = tokens.get(1);
-		String valueStr = tokens.get(2);
-		return simpleExprParser.parse(fieldStr, opStr, valueStr);
-	}
-
-	private static boolean argsNumberForCompoundFilter(int n) {
-		// 3 7 11 15...
-		return (n - 3) % 4 == 0;
-	}
-
-	private CompoundFilterExpression parseCompoundFilter(List<String> tokens) {
-		return compoundExprParser.parse(tokens);
 	}
 
 }

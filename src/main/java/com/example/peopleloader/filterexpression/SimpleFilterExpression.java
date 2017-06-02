@@ -25,6 +25,11 @@ public class SimpleFilterExpression<T extends Comparable<T>> implements FilterEx
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return fieldNameArg + " " + relationalOperator + " " + valueArg;
+	}
+
 	public FieldArgument<T> getFieldNameArgument() {
 		return fieldNameArg;
 	}

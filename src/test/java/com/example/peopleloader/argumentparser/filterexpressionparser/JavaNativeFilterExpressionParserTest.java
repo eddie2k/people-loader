@@ -9,12 +9,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.IntStream;
 
+import org.assertj.core.util.Strings;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +30,6 @@ import junitparams.Parameters;
 @RunWith(JUnitParamsRunner.class)
 public class JavaNativeFilterExpressionParserTest {
 
-	private static final String ANY_TOKEN = "ANY_TOKEN";
 	private static final String ANY_SIMPLE_FILTER_EXPR = "field1" + TOKENS_DELIMITER + "operator1" + TOKENS_DELIMITER
 			+ "'value1'";
 	private static final String ANOTHER_SIMPLE_FILTER_EXPR = "field2" + TOKENS_DELIMITER + "opreator2"
@@ -113,24 +109,17 @@ public class JavaNativeFilterExpressionParserTest {
 		sut.parse(ANY_COMPOUND_FILTER_EXPRESSION);
 	}
 
-	@Test(expected = InvalidFilterException.class)
-	@Parameters(method = "invalidNumberOfTokens")
-	public void shouldThrowJsonParseException_givenInvalidContent(String filterExpression)
-			throws FileNotFoundException {
-		// when
-		sut.parse(filterExpression);
-
-		Stream.empty();
-	}
-
 	@SuppressWarnings("unused")
 	private Object[] invalidNumberOfTokens() {
-		Set<Integer> invalidTokenNumbers = new HashSet<>(Arrays.asList(1, 2, 4, 6, 8, 9, 10, 12, 13, 14));
-		return invalidTokenNumbers.stream().mapToInt(i -> i).mapToObj(n -> generateNTokens(n)).toArray(Object[]::new);
+		return IntStream.of(1, 2, 4, 6, 8, 9, 10, 12, 13, 14)
+				.mapToObj(n -> Strings.join(FilterExpressionUtils.generateNTokens(n)).with(TOKENS_DELIMITER))
+				.map(s -> new Object[] { s }).toArray(Object[]::new);
 	}
 
-	private static Object[] generateNTokens(int n) {
-		String tokens = Stream.<String>generate(() -> ANY_TOKEN).limit(n).collect(Collectors.joining(TOKENS_DELIMITER));
-		return new Object[] { tokens };
+	@Test(expected = InvalidFilterException.class)
+	@Parameters(method = "invalidNumberOfTokens")
+	public void shouldRejectInvalidNumberOfTokens(String filterExpression) throws FileNotFoundException {
+		// when
+		sut.parse(filterExpression);
 	}
 }

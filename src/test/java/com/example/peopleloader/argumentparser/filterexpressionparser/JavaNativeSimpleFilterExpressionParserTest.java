@@ -13,7 +13,6 @@ import com.example.peopleloader.argumentparser.arguments.operators.relational.Eq
 import com.example.peopleloader.argumentparser.arguments.operators.relational.LessOrEqualToOperator;
 import com.example.peopleloader.argumentparser.arguments.value.BirthDateValueArgument;
 import com.example.peopleloader.argumentparser.arguments.value.NameValueArgument;
-import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidFilterException;
 import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidSimpleFilterException;
 import com.example.peopleloader.filterexpression.SimpleFilterExpression;
 import com.example.peopleloader.filterexpression.constants.BinaryRelationalOperator;
@@ -21,7 +20,7 @@ import com.example.peopleloader.filterexpression.constants.FieldName;
 import com.example.peopleloader.model.BirthDate;
 import com.example.peopleloader.model.Name;
 
-public class SimpleFilterExpressionTest {
+public class JavaNativeSimpleFilterExpressionParserTest {
 
 	private static final String ANY_WORD = "SINGLEWORD";
 	private static final String ANY_FIELD_NAME = FieldName.NAME.getText();
@@ -37,19 +36,19 @@ public class SimpleFilterExpressionTest {
 		sut = new JavaNativeSimpleFilterExpressionParser();
 	}
 
-	@Test(expected = InvalidFilterException.class)
+	@Test(expected = InvalidSimpleFilterException.class)
 	public void shouldRejectNullField() {
 		// when
 		sut.parse(null, ANY_TOKEN, ANY_TOKEN);
 	}
 
-	@Test(expected = InvalidFilterException.class)
+	@Test(expected = InvalidSimpleFilterException.class)
 	public void shouldRejectNullOp() {
 		// when
 		sut.parse(ANY_TOKEN, null, ANY_TOKEN);
 	}
 
-	@Test(expected = InvalidFilterException.class)
+	@Test(expected = InvalidSimpleFilterException.class)
 	public void shouldRejectNullValue() {
 		// when
 		sut.parse(ANY_TOKEN, ANY_TOKEN, null);
@@ -122,7 +121,8 @@ public class SimpleFilterExpressionTest {
 	@Test(expected = InvalidSimpleFilterException.class)
 	public void shouldRejectWrongOperator() {
 		// when
-		sut.parse(ANY_FIELD_NAME, "WRONG_OPERATOR", ANY_VALUE);
+		String wrongOp = "WRONGOP";
+		sut.parse(ANY_FIELD_NAME, wrongOp, ANY_VALUE);
 	}
 
 	@Test

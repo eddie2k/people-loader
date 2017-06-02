@@ -9,6 +9,7 @@ import com.example.peopleloader.argumentparser.arguments.operators.relational.Le
 import com.example.peopleloader.argumentparser.arguments.operators.relational.RelationalOperatorArgument;
 import com.example.peopleloader.argumentparser.arguments.value.BirthDateValueArgument;
 import com.example.peopleloader.argumentparser.arguments.value.NameValueArgument;
+import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidFieldNameArgumentException;
 import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidOperatorArgumentException;
 import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidSimpleFilterException;
 import com.example.peopleloader.argumentparser.filterexpressionparser.exception.InvalidValueArgumentException;
@@ -61,11 +62,16 @@ public class JavaNativeSimpleFilterExpressionParser {
 				return new SimpleFilterExpression<BirthDate>(BirthDateFieldArgument.getInstance(), operator,
 						getBirthDateValue(valueStr));
 			default:
-				throw new InvalidSimpleFilterException("Field name cannot be parsed");
+				throw new UnsupportedOperationException("Field name " + fieldName + "is known but unsuported");
 			}
-		} catch (InvalidSimpleFilterException e) {
+		} catch (InvalidFieldNameArgumentException | InvalidValueArgumentException
+				| InvalidOperatorArgumentException e) {
 			throw new InvalidSimpleFilterException(e);
 		}
+	}
+
+	public static boolean argsNumberForSimpleFilter(int n) {
+		return n == 3;
 	}
 
 	private static NameValueArgument getNameValue(String valueStr) {
@@ -92,7 +98,7 @@ public class JavaNativeSimpleFilterExpressionParser {
 		case EQ:
 			return EqualToOperator.getInstance();
 		default:
-			throw new InvalidOperatorArgumentException("Operator cannot be parsed");
+			throw new UnsupportedOperationException("Operator " + operator + "is known but unsuported");
 		}
 	}
 
