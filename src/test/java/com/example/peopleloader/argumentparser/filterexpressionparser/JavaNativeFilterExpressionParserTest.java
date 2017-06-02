@@ -1,6 +1,6 @@
 package com.example.peopleloader.argumentparser.filterexpressionparser;
 
-import static com.example.peopleloader.argumentparser.filterexpressionparser.JavaNativeFilterExpressionParser.TOKENS_DELIMITER;
+import static com.example.peopleloader.argumentparser.PlainTextArgumentParser.TOKENS_DELIMITER;
 import static com.example.peopleloader.filterexpression.constants.BinaryLogicalOperators.AND;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.willReturn;

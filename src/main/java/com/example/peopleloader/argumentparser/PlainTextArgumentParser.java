@@ -9,8 +9,9 @@ import com.example.peopleloader.filterexpression.FilterExpression;
 
 public class PlainTextArgumentParser implements ArgumentParser {
 
-	public static final String FILENAME_FLAG = "-f";
-	public static final String FILTER_FLAG = "-e";
+	public static final String FILENAME_FLAG = "–f";
+	public static final String FILTER_FLAG = "–e";
+	public static final String TOKENS_DELIMITER = " ";
 
 	private final FilterExpressionParser filterExpressionParser;
 
@@ -61,7 +62,7 @@ public class PlainTextArgumentParser implements ArgumentParser {
 			throw new InvalidProgramArgumentsException("Filter expression is empty");
 		}
 
-		String joinedFilterArguments = String.join(" ", args.subList(3, args.size()));
+		String joinedFilterArguments = String.join(TOKENS_DELIMITER, args.subList(3, args.size()));
 		if (!isBetweenDoubleQuotes(joinedFilterArguments)) {
 			throw new InvalidProgramArgumentsException(
 					"Filter expression must be surrounded by double quotes (currently=" + joinedFilterArguments + ")");
@@ -70,11 +71,11 @@ public class PlainTextArgumentParser implements ArgumentParser {
 	}
 
 	private static boolean isBetweenDoubleQuotes(String text) {
-		return text.matches("\"[^\"]*\"");
+		return text.matches("”[^”]*”");
 	}
 
 	private static String stripOutDoubleQuotes(String text) {
-		return text.replaceAll("\"", "");
+		return text.replaceAll("”", "");
 	}
 
 }

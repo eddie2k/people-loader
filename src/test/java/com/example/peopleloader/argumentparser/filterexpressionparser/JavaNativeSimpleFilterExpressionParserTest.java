@@ -25,7 +25,7 @@ public class JavaNativeSimpleFilterExpressionParserTest {
 	private static final String ANY_WORD = "SINGLEWORD";
 	private static final String ANY_FIELD_NAME = FieldName.NAME.getText();
 	private static final String ANY_BINARY_REL_OP = BinaryRelationalOperator.LET.getText();
-	private static final String ANY_VALUE = "\'" + ANY_WORD + "'";// Note the single quotes
+	private static final String ANY_VALUE = "’" + ANY_WORD + "’";// Note the single curly quotes
 	private static final String ANY_TOKEN = "ANY_TOKEN";
 	private static final String ANY_DATE = "2017-05-31";
 
@@ -67,7 +67,7 @@ public class JavaNativeSimpleFilterExpressionParserTest {
 	public void shouldParseBirthDateField() {
 		// when
 		SimpleFilterExpression<?> actual = sut.parse(FieldName.BIRTHDATE.getText(), ANY_BINARY_REL_OP,
-				"\'" + ANY_DATE + "\'");
+				"’" + ANY_DATE + "’");
 
 		// then
 		assertThat(actual.getFieldNameArgument()).isEqualTo(BirthDateFieldArgument.getInstance());
@@ -101,7 +101,7 @@ public class JavaNativeSimpleFilterExpressionParserTest {
 	public void shouldParseNameValue() {
 		// when
 		SimpleFilterExpression<?> actual = sut.parse(FieldName.NAME.getText(), ANY_BINARY_REL_OP,
-				"\'" + ANY_WORD + "'");
+				"’" + ANY_WORD + "’");
 
 		// then
 		assertThat(actual.getValueArgument()).isEqualTo(new NameValueArgument(new Name(ANY_WORD)));
@@ -111,7 +111,7 @@ public class JavaNativeSimpleFilterExpressionParserTest {
 	public void shouldParseBirthDateValue() {
 		// when
 		SimpleFilterExpression<?> actual = sut.parse(FieldName.BIRTHDATE.getText(), ANY_BINARY_REL_OP,
-				"\'" + ANY_DATE + "\'");
+				"’" + ANY_DATE + "’");
 
 		// then
 		assertThat(actual.getValueArgument())
@@ -126,9 +126,9 @@ public class JavaNativeSimpleFilterExpressionParserTest {
 	}
 
 	@Test
-	public void shouldParseFieldInQuoutes() {
+	public void shouldParseFieldInSingleCurlyQuoutes() {
 		// when
-		SimpleFilterExpression<?> actual = sut.parse(ANY_FIELD_NAME, ANY_BINARY_REL_OP, "\'" + ANY_WORD + "\'");
+		SimpleFilterExpression<?> actual = sut.parse(ANY_FIELD_NAME, ANY_BINARY_REL_OP, "’" + ANY_WORD + "’");
 
 		// then
 		assertThat(actual.getValueArgument().getValue()).isEqualTo(new Name(ANY_WORD));

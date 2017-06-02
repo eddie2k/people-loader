@@ -12,8 +12,6 @@ import com.example.peopleloader.filterexpression.NoFilterExpression;
 
 public class JavaNativeFilterExpressionParser implements FilterExpressionParser {
 
-	public static final String TOKENS_DELIMITER = " ";
-
 	private final JavaNativeSimpleFilterExpressionParser simpleExprParser;
 
 	private final JavaNativeCompoundFilterExpressionParser compoundExprParser;

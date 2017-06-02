@@ -3,6 +3,7 @@ package com.example.peopleloader.argumentparser.filterexpressionparser;
 
 import static com.example.peopleloader.argumentparser.PlainTextArgumentParser.FILENAME_FLAG;
 import static com.example.peopleloader.argumentparser.PlainTextArgumentParser.FILTER_FLAG;
+import static com.example.peopleloader.argumentparser.PlainTextArgumentParser.TOKENS_DELIMITER;
 import static java.util.Arrays.asList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.willThrow;
@@ -76,7 +77,7 @@ public class PlainTextArgumentParserTest {
 	@Test
 	public void shouldParseFilter_givenFilterArgumentsAreNotEmpty_andBetweenQuotes() {
 		// when
-		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "\"" + ANOTHER_STRING + "\""));
+		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "”" + ANOTHER_STRING + "”"));
 
 		// then
 		verify(filterExpressionParser).parse(Mockito.any());
@@ -85,10 +86,10 @@ public class PlainTextArgumentParserTest {
 	@Test
 	public void shouldComposeFilterFromThirdAndFollowingArgs() {
 		// when
-		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "\"" + ANOTHER_STRING, A_THIRD_STRING + "\""));
+		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "”" + ANOTHER_STRING, A_THIRD_STRING + "”"));
 
 		// then
-		verify(filterExpressionParser).parse(ANOTHER_STRING + " " + A_THIRD_STRING);
+		verify(filterExpressionParser).parse(ANOTHER_STRING + TOKENS_DELIMITER + A_THIRD_STRING);
 	}
 
 	@Test(expected = InvalidProgramArgumentsException.class)
