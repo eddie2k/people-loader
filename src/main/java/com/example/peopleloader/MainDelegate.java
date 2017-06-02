@@ -7,6 +7,7 @@ import java.util.stream.Stream;
 
 import com.example.peopleloader.argumentparser.ArgumentParser;
 import com.example.peopleloader.argumentparser.ParsedArguments;
+import com.example.peopleloader.exception.InvalidProgramArgumentsException;
 import com.example.peopleloader.filter.Filter;
 import com.example.peopleloader.filterexpression.FilterExpression;
 import com.example.peopleloader.loader.Loader;
@@ -41,15 +42,18 @@ public final class MainDelegate {
 			FilterExpression filterExpression = parsedArguments.getFilterExpression();
 			String filename = parsedArguments.getFilename();
 
-			Stream<Person> loaded = loader.loadFromFile(filename);
-			Stream<Person> filtered = filter.applyFilter(loaded, filterExpression);
-			printer.print(filtered);
-		} catch (FileNotFoundException e) {
-			System.out.println("File not found: " + e.getMessage());
-		} catch (JsonParseException e) {
-			System.out.println("Error parsing the file: " + e.getMessage());
+			try {
+				Stream<Person> loaded = loader.loadFromFile(filename);
+				Stream<Person> filtered = filter.applyFilter(loaded, filterExpression);
+				printer.print(filtered);
+			} catch (FileNotFoundException e) {
+				System.out.println("File not found: " + filename);
+			} catch (JsonParseException e) {
+				System.out.println("Error parsing the file: " + e.getMessage());
+			}
+		} catch (InvalidProgramArgumentsException e) {
+			System.out.println("Invalid arguments passed: " + String.join(" ", args));
 		}
-		// TODO parse filter exception
 	}
 
 }

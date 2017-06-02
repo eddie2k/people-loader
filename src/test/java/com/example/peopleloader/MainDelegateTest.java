@@ -2,7 +2,6 @@ package com.example.peopleloader;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willThrow;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
 import java.io.FileNotFoundException;
@@ -19,7 +18,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.example.peopleloader.argumentparser.ArgumentParser;
 import com.example.peopleloader.argumentparser.ParsedArguments;
-import com.example.peopleloader.exception.InvalidProgramArgumentsException;
 import com.example.peopleloader.filter.Filter;
 import com.example.peopleloader.filterexpression.FilterExpression;
 import com.example.peopleloader.loader.Loader;
@@ -97,15 +95,6 @@ public class MainDelegateTest {
 
 		// then
 		verify(argumentParser).parse(ANY_ARGS);
-	}
-
-	@Test(expected = InvalidProgramArgumentsException.class)
-	public void shouldThrowInvalidProgramArgumentsException_givenParsingFail() {
-		// given
-		willThrow(InvalidProgramArgumentsException.class).given(argumentParser).parse(any());
-
-		// when
-		sut.run(ANY_ARGS);
 	}
 
 	@Test
