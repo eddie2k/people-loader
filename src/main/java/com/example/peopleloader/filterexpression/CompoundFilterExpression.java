@@ -19,7 +19,7 @@ public class CompoundFilterExpression implements FilterExpression {
 
 	@Override
 	public Predicate<? super Person> getPredicate() {
-		return null;
+		return person -> op.apply(left.getPredicate().test(person), right.getPredicate().test(person));
 	}
 
 	public FilterExpression getLeft() {

@@ -22,7 +22,7 @@ public class SimpleFilterExpression<T extends Comparable<T>> implements FilterEx
 
 	@Override
 	public Predicate<? super Person> getPredicate() {
-		return null;
+		return person -> relationalOperator.apply(fieldNameArg.getFieldFrom(person), valueArg.getValue());
 	}
 
 	@Override

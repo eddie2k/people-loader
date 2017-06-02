@@ -18,7 +18,7 @@ public final class NoFilterExpression implements FilterExpression {
 
 	@Override
 	public Predicate<? super Person> getPredicate() {
-		return null;
+		return person -> true;
 	}
 
 	@Override
