@@ -21,8 +21,8 @@ import com.example.peopleloader.model.Name;
 
 public class JavaNativeSimpleFilterExpressionParser {
 
-	private static final String SINGLE_WORD_BETWEEN_SINGLE_CURLY_QUOTES_REGEX = "^’[_a-zA-Z0-9]+’$";
-	private static final String DATE_BETWEEN_SINGLE_CURLY_QUOTES_REGEX = "^’[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]’$";
+	private static final String SINGLE_WORD_BETWEEN_SINGLE_CURLY_QUOTES_REGEX = "^‘[_a-zA-Z0-9]+’$";
+	private static final String DATE_BETWEEN_SINGLE_CURLY_QUOTES_REGEX = "^‘[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]’$";
 
 	/**
 	 * Parses a simple filter. The expected format is:

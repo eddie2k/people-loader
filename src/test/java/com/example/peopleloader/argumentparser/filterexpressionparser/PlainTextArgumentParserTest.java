@@ -77,7 +77,7 @@ public class PlainTextArgumentParserTest {
 	@Test
 	public void shouldParseFilter_givenFilterArgumentsAreNotEmpty_andBetweenQuotes() {
 		// when
-		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "”" + ANOTHER_STRING + "”"));
+		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "“" + ANOTHER_STRING + "”"));
 
 		// then
 		verify(filterExpressionParser).parse(Mockito.any());
@@ -86,7 +86,7 @@ public class PlainTextArgumentParserTest {
 	@Test
 	public void shouldComposeFilterFromThirdAndFollowingArgs() {
 		// when
-		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "”" + ANOTHER_STRING, A_THIRD_STRING + "”"));
+		sut.parse(asList(FILENAME_FLAG, ANY_STRING, FILTER_FLAG, "“" + ANOTHER_STRING, A_THIRD_STRING + "”"));
 
 		// then
 		verify(filterExpressionParser).parse(ANOTHER_STRING + TOKENS_DELIMITER + A_THIRD_STRING);
