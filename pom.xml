@@ -46,10 +46,10 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
-					<finalName>${project.name}-service-${project.version}</finalName>
+					<finalName>${project.name}-${project.version}</finalName>
 					<archive>
 						<manifest>
-							<mainClass>peopleloader.Main</mainClass>
+							<mainClass>com.example.peopleloader.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
