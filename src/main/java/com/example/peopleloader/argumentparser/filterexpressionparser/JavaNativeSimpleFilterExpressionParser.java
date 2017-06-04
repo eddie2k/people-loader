@@ -21,8 +21,8 @@ import com.example.peopleloader.model.Name;
 
 public class JavaNativeSimpleFilterExpressionParser {
 
-	private static final String SINGLE_WORD_BETWEEN_SINGLE_CURLY_QUOTES_REGEX = "^‘[_a-zA-Z0-9]+’$";
-	private static final String DATE_BETWEEN_SINGLE_CURLY_QUOTES_REGEX = "^‘[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]’$";
+	private static final String SINGLE_WORD_BETWEEN_SINGLE_QUOTES_REGEX = "^'[_a-zA-Z0-9]+'$";
+	private static final String DATE_BETWEEN_SINGLE_QUOTES_REGEX = "^'[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'$";
 
 	/**
 	 * Parses a simple filter. The expected format is:
@@ -75,7 +75,7 @@ public class JavaNativeSimpleFilterExpressionParser {
 	}
 
 	private static NameValueArgument getNameValue(String valueStr) {
-		if (!valueStr.matches(SINGLE_WORD_BETWEEN_SINGLE_CURLY_QUOTES_REGEX)) {
+		if (!valueStr.matches(SINGLE_WORD_BETWEEN_SINGLE_QUOTES_REGEX)) {
 			throw new InvalidValueArgumentException("Name value cannot be parsed: " + valueStr);
 		}
 		String trimmed = valueStr.substring(1, valueStr.length() - 1);
@@ -83,7 +83,7 @@ public class JavaNativeSimpleFilterExpressionParser {
 	}
 
 	private static BirthDateValueArgument getBirthDateValue(String valueStr) {
-		if (!valueStr.matches(DATE_BETWEEN_SINGLE_CURLY_QUOTES_REGEX)) {
+		if (!valueStr.matches(DATE_BETWEEN_SINGLE_QUOTES_REGEX)) {
 			throw new InvalidValueArgumentException("BirthDate value cannot be parsed: " + valueStr);
 		}
 		String trimmed = valueStr.substring(1, valueStr.length() - 1);

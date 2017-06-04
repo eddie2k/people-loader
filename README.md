@@ -24,7 +24,7 @@ java -jar target/people-loader-1.0-jar-with-dependencies.jar -f sample.json
 
 Or
 ```
-java -jar target/people-loader-1.0-jar-with-dependencies.jar -f sample.json -e “name == ‘John_Lennon’”
+java -jar target/people-loader-1.0-jar-with-dependencies.jar -f sample.json -e "name == 'John_Lennon' and birthDate <= '2017-05-31'"
 ```
 
 Notes

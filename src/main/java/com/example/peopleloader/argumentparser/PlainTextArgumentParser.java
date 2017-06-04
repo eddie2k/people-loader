@@ -62,21 +62,6 @@ public class PlainTextArgumentParser implements ArgumentParser {
 			throw new InvalidProgramArgumentsException("Filter expression is empty");
 		}
 		String joinedFilterArguments = String.join(TOKENS_DELIMITER, args.subList(3, args.size()));
-		if (!isBetweenDoubleCurlyQuotes(joinedFilterArguments)) {
-			throw new InvalidProgramArgumentsException(
-					"Filter expression must be surrounded by double curly quotes (currently=" + joinedFilterArguments
-							+ ")");
-		}
-		return filterExpressionParser.parse(stripOutDoubleCurlyQuotes(joinedFilterArguments));
+		return filterExpressionParser.parse(joinedFilterArguments);
 	}
-
-	private static boolean isBetweenDoubleCurlyQuotes(String text) {
-		// Note there are opening (”) and closing (”) curly quotes
-		return text.matches("“[^“”]*”");
-	}
-
-	private static String stripOutDoubleCurlyQuotes(String text) {
-		return text.replaceAll("“", "").replaceAll("”", "");
-	}
-
 }

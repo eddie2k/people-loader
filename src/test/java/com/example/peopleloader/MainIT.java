@@ -56,8 +56,8 @@ public class MainIT {
 	@Test
 	public void testValidFile_withFilterForEveryone() {
 		// when
-		String filterExpression = "“" + BIRTHDATE.getText() + TOKENS_DELIMITER + LET.getText() + TOKENS_DELIMITER
-				+ "‘1900-01-01’”";
+		String filterExpression = BIRTHDATE.getText() + TOKENS_DELIMITER + LET.getText() + TOKENS_DELIMITER
+				+ "'1900-01-01'";
 		String args = Strings.join(FILENAME_FLAG, VALID_JSON_FILE, FILTER_FLAG, filterExpression)
 				.with(TOKENS_DELIMITER);
 		Main.main(args.split(TOKENS_DELIMITER));
