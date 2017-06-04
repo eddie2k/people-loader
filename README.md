@@ -19,7 +19,7 @@ mvn clean package
 ```
 
 ```
-java -jar target/people-loader-1.0-jar-with-dependencies.jar
+java -jar target/people-loader-1.0-jar-with-dependencies.jar -f sample.json
 ```
 
 Or
