@@ -2,6 +2,7 @@ package com.example.peopleloader.model;
 
 public final class Person {
 
+	// Name and BirthDate looks like overengineered a bit. However - gives more power.
 	private final Name name;
 	private final BirthDate birthDate;
 
