@@ -39,7 +39,7 @@ public class MainIT {
 
 	@Before
 	public void setUp() {
-		System.setOut(new PrintStream(outContent));
+		System.setOut(new PrintStream(outContent)); // this seems to be a bit dangerous. Maybe printStream should be an argument to Main?
 	}
 
 	@Test
@@ -50,7 +50,8 @@ public class MainIT {
 
 		// then
 		String expected = join(asList(JOHN_LENNON, PAUL_MCCARTNEY, GEORGE_HARRISON, RINGO_STAR)).with("\n") + "\n";
-		assertThat(outContent.toString()).isEqualTo(expected);
+		assertThat(outContent.toString()).isEqualTo(expected); // this fails on windows due to line separators conflicts: CRLF vs. LF.
+		// Consid
 	}
 
 	@Test

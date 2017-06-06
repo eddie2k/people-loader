@@ -47,7 +47,10 @@ public final class MainDelegate {
 				Stream<Person> filtered = filter.applyFilter(loaded, filterExpression);
 				printer.print(filtered);
 			} catch (FileNotFoundException e) {
-				System.out.println("File not found: " + filename);
+				System.out.println("File not found: " + filename); 
+				// I would use a logging framework like slf4j
+				// It is also a good practice to print stacktrace
+				// single line would do it: log.error("File not found: {}", filename, e)
 			} catch (JsonParseException e) {
 				System.out.println("Error parsing the file: " + e.getMessage());
 			}

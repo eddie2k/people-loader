@@ -31,7 +31,7 @@ public class JsonFileLoaderTest {
 		sut = new JsonFileLoader();
 	}
 
-	@Test(expected = NullPointerException.class)
+	@Test(expected = NullPointerException.class) // I prefer assertThatExceptionIsThrown method - it allows you to verify the exception in greater details.
 	public void shouldRejectNullFilename() throws FileNotFoundException {
 		// when
 		sut.loadFromFile(null);

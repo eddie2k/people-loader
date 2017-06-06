@@ -36,8 +36,14 @@ public final class JsonFileLoader implements Loader {
 			ObjectMapper mapper = new ObjectMapper();
 			JsonFactory jsonFactory = new JsonFactory();
 			JsonParser jsonParser = jsonFactory.createParser(new File(filename));
+			// We might have memory troubles here for huge json files. Consider jackson streaming parser.
+			// It adds complication, may be slower but - no such limits.
 			List<JsonPerson> loadedJsonPerson = Arrays.asList(mapper.readValue(jsonParser, JsonPerson[].class));
-			return loadedJsonPerson.stream().map(p -> new Person(p.name, p.birthDate)).collect(Collectors.toList())
+			return loadedJsonPerson.stream()
+					// using parallel stream might help to achieve better performance, but only for non-streaming parser
+					// Let's not optimize too much ;)
+					.map(p -> new Person(p.name, p.birthDate)).collect(Collectors.toList()) 
+					
 					.stream();
 		} catch (JsonParseException | JsonMappingException e) {
 			throw new com.example.peopleloader.loader.exception.JsonParseException(e);
@@ -51,13 +57,15 @@ public final class JsonFileLoader implements Loader {
 	/**
 	 * Internal class to avoid polluting core classes with Jackson annotations
 	 */
+	// It is hard to answer is it a good or bad idea. I personally annotate core classes. 
+	// Argument: image adding new field to Person. Ideally it should require only one change - of Person class.
 	private static class JsonPerson {
 		private final Name name;
 		private final BirthDate birthDate;
 
 		@JsonCreator
 		public JsonPerson(
-				@JsonProperty(value = "name", required = true) @JsonDeserialize(using = NameDeserializer.class) Name name,
+				@JsonProperty(value = "name", required = true) @JsonDeserialize(using = NameDeserializer.class) Name name, // thumbs up for custom deserializer!
 				@JsonProperty(value = "birthDate", required = true) @JsonDeserialize(using = BirthDateDeserializer.class) BirthDate birthDate) {
 			this.name = name;
 			this.birthDate = birthDate;

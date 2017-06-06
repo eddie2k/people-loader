@@ -56,6 +56,7 @@ public class JavaNativeSimpleFilterExpressionParser {
 
 			switch (fieldName) {
 			case NAME:
+				// I would simplify it by using reflection, but your solution is ok :)
 				return new SimpleFilterExpression<Name>(NameFieldArgument.getInstance(), operator,
 						getNameValue(valueStr));
 			case BIRTHDATE:
@@ -93,7 +94,7 @@ public class JavaNativeSimpleFilterExpressionParser {
 	private static RelationalOperatorArgument getOperator(String opStr) {
 		BinaryRelationalOperator operator = BinaryRelationalOperator.fromString(opStr);
 		switch (operator) {
-		case LET:
+		case LET: // This may be a behaviour defined in LET enum instance
 			return LessOrEqualToOperator.getInstance();
 		case EQ:
 			return EqualToOperator.getInstance();

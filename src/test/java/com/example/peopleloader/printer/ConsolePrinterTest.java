@@ -41,7 +41,7 @@ public class ConsolePrinterTest {
 	}
 
 	@Test
-	public void shouldPrintAllPerson_whenStreamIsNotEmpty() {
+	public void shouldPrintAllPerson_whenStreamIsNotEmpty() { // FIXME: this also fails on windows
 		// when
 		sut.print(Stream.of(ANY_PERSON, ANOTHER_PERSON));
 

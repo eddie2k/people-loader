@@ -21,6 +21,7 @@ public enum FieldName {
 	 * @throws InvalidFieldNameArgumentException
 	 */
 	public static FieldName fromString(String text) {
+		// FIXME we might use values() static method instead
 		switch (text) {
 		case "name":
 			return NAME;
